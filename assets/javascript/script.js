@@ -3,7 +3,7 @@ var searchFormEl = document.querySelector("#search-form");
 var searchCityInputEl = document.querySelector("#searchcity");
 var mainDivEl = document.querySelector('#main-div');
 
-var formSubmitHandler = function(event) {
+var formSubmitHandler = function (event) {
     event.preventDefault();
     var searchValue = searchCityInputEl.value.trim();
 
@@ -13,41 +13,47 @@ var formSubmitHandler = function(event) {
 
 };
 
-async function getWeather (citySearchVal) {
+//calling open weather api
+async function getWeather(citySearchVal) {
     try {
-        //current weather
+        //current weather using open weather map
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${citySearchVal}&units=imperial&appid=${openWeatherKey}`;
         const rawData = await fetch(url);
         const currentWeatherData = await rawData.json();
 
-        const url2 = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentWeatherData.coord.lat}&lon=${currentWeatherData.coord.lon}&units=imperial&appid=${openWeatherKey}`;
+        //5 day weather forecast using open weather map
+        const url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentWeatherData.coord.lat}&lon=${currentWeatherData.coord.lon}&exclude=minutely,hourly&units=imperial&appid=${openWeatherKey}`;
         const rawData2 = await fetch(url2);
         const forecastWeatherData = await rawData2.json();
 
-        console.log(currentWeatherData,forecastWeatherData);
+        console.log(currentWeatherData, forecastWeatherData);
 
-        displayWeather(currentWeatherData)
+        displayWeather(currentWeatherData, forecastWeatherData)
 
     } catch (err) {
         console.log(err)
     }
 }
 
-function displayWeather (currentWeatherData,forecastWeatherData) {
+//displays weather on page
+function displayWeather(currentWeatherData, forecastWeatherData) {
 
+    //placing js into the html
     mainDivEl.innerHTML = `
         <h2>${currentWeatherData.name}</h2>
-        <p>${currentWeatherData.weather.description}
         <p class="">Temp: ${currentWeatherData.main.temp} °f</p>
         <p>Humidity: ${currentWeatherData.main.humidity}</p>
         <p>Wind: ${currentWeatherData.wind.speed}</p>
-    
-    `
-
+        <br>
+   
+     `
+    //for loop for 5 day temp forecast
+    for (var i = 0; i < 5; i++) {
+        var tempElement = document.createElement("p")
+        tempElement.textContent = forecastWeatherData.daily[i].temp.day
+        document.getElementById("forecast").append(tempElement)
+    }
 
 }
 
 searchFormEl.addEventListener("submit", formSubmitHandler);
-
-
-// const url = `https://api.openweathermap.org/data/2.5/weather?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${openWeatherKey}`;
