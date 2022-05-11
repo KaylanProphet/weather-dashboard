@@ -41,18 +41,28 @@ function displayWeather(currentWeatherData, forecastWeatherData) {
     //placing js into the html
     mainDivEl.innerHTML = `
         <h2>${currentWeatherData.name}</h2>
+        <p>${currentWeatherData.weather.icon}
         <p class="">Temp: ${currentWeatherData.main.temp} °f</p>
         <p>Humidity: ${currentWeatherData.main.humidity}</p>
         <p>Wind: ${currentWeatherData.wind.speed}</p>
         <br>
    
      `
+     //for loop for date for 5 day forecast
+     for (var i=0; i < 5; i++) {
+         var dateElement = document.createElement("p")
+         //TODO change the date from unix
+         dateElement.textContent = forecastWeatherData.daily[i].dt
+         document.getElementById("forecast").append(dateElement)
+     }
     //for loop for 5 day temp forecast
     for (var i = 0; i < 5; i++) {
         var tempElement = document.createElement("p")
         tempElement.textContent = forecastWeatherData.daily[i].temp.day
         document.getElementById("forecast").append(tempElement)
     }
+
+
 
 }
 
