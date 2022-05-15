@@ -132,8 +132,12 @@ function displayWeather(currentWeatherData, forecastWeatherData) {
         var tempElement = document.createElement("p")
         //passes the temp from the data into the tempElement's text content
         tempElement.textContent = forecastWeatherData.daily[i].temp.day
+        var humidityElement = document.createElement("p")
+        humidityElement.textContent = forecastWeatherData.daily[i].humidity
+        var windElement = document.createElement("p")
+        windElement.textContent = forecastWeatherData.daily[i].wind_speed
         //put my wrapperElement on the doc and the date and temp inside it?
-        wrapperElement.append(dateElement, tempElement)
+        wrapperElement.append(dateElement, tempElement, humidityElement, windElement)
         //using the forecast id on the html, append the wrappersElement there
         forecast.append(wrapperElement)
     }
