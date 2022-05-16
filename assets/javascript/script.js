@@ -128,12 +128,8 @@ function displayWeather(currentWeatherData, forecastWeatherData) {
         var currentDate = new Date(parseInt(forecastWeatherData.daily[i].dt) * 1000)
         //toLocaleDateString takes currentDate and turns it into a string that it will go in the dateElement var
         dateElement.textContent = currentDate.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-
-
         var weatherImg = document.createElement("img")
         weatherImg.src = `http://openweathermap.org/img/wn/${forecastWeatherData.daily[i].weather[0].icon}@2x.png`
-
-
         //holds a p tag
         var tempElement = document.createElement("p")
         //passes the temp from the data into the tempElement's text content
