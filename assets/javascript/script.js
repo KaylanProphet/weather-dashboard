@@ -128,16 +128,22 @@ function displayWeather(currentWeatherData, forecastWeatherData) {
         var currentDate = new Date(parseInt(forecastWeatherData.daily[i].dt) * 1000)
         //toLocaleDateString takes currentDate and turns it into a string that it will go in the dateElement var
         dateElement.textContent = currentDate.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+
+
+        var weatherImg = document.createElement("img")
+        weatherImg.src = `http://openweathermap.org/img/wn/${forecastWeatherData.daily[i].weather[0].icon}@2x.png`
+
+
         //holds a p tag
         var tempElement = document.createElement("p")
         //passes the temp from the data into the tempElement's text content
-        tempElement.textContent = forecastWeatherData.daily[i].temp.day
+        tempElement.textContent = "Temp: " + forecastWeatherData.daily[i].temp.day + "°F"
         var humidityElement = document.createElement("p")
-        humidityElement.textContent = forecastWeatherData.daily[i].humidity
+        humidityElement.textContent = "Humidity: " + forecastWeatherData.daily[i].humidity + "%"
         var windElement = document.createElement("p")
-        windElement.textContent = forecastWeatherData.daily[i].wind_speed
+        windElement.textContent = "Wind: " + forecastWeatherData.daily[i].wind_speed + "mph"
         //put my wrapperElement on the doc and the date and temp inside it?
-        wrapperElement.append(dateElement, tempElement, humidityElement, windElement)
+        wrapperElement.append(dateElement, weatherImg, tempElement, humidityElement, windElement)
         //using the forecast id on the html, append the wrappersElement there
         forecast.append(wrapperElement)
     }
